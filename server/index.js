@@ -17,11 +17,9 @@ app.use((req, res, next) => {
   }
 });
 
-// Body parsing middleware
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Mount the /api routes
 app.use('/api', scrapeRoute);
 
 // Root endpoint
@@ -44,7 +42,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Error handling middleware
+// Error handling
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err);
   res.status(500).json({

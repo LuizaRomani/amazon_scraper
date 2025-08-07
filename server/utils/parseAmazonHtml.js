@@ -24,19 +24,6 @@ function extractProductRating(productElement) {
     if (element) {
       const ratingText = element.textContent || element.getAttribute('aria-label') || '';
       
-      // Handle Brazilian Portuguese format: "4,8 de 5 estrelas"
-      const ptBrMatch = ratingText.match(/(\d+[,\d]*)\s*de\s*5\s*estrelas?/i);
-      if (ptBrMatch) {
-        return `${ptBrMatch[1]} out of 5 stars`;
-      }
-      
-      // Handle English format: "4.8 out of 5 stars"
-      const enMatch = ratingText.match(/(\d+[.\d]*)\s*out\s*of\s*5\s*stars?/i);
-      if (enMatch) {
-        return `${enMatch[1]} out of 5 stars`;
-      }
-      
-      // Generic number extraction
       const numberMatch = ratingText.match(/(\d+[,\d]*)/);
       if (numberMatch) {
         return `${numberMatch[1]} out of 5 stars`;
@@ -59,19 +46,6 @@ function extractProductReviews(productElement) {
     if (element) {
       const reviewsText = element.textContent.trim();
       
-      // Handle Brazilian Portuguese format: "1.572 classificações globais"
-      const ptBrMatch = reviewsText.match(/(\d+[.,\d]*)\s*classificações?/i);
-      if (ptBrMatch) {
-        return ptBrMatch[1];
-      }
-      
-      // Handle English format: "1,572 reviews"
-      const enMatch = reviewsText.match(/(\d+[.,\d]*)\s*reviews?/i);
-      if (enMatch) {
-        return enMatch[1];
-      }
-      
-      // Generic number extraction (handles both comma and dot separators)
       const numberMatch = reviewsText.match(/(\d+[.,\d]*)/);
       if (numberMatch) {
         return numberMatch[1];
@@ -98,11 +72,12 @@ function extractProductImageUrl(productElement) {
       }
     }
   }
+
   return 'Image not found';
 }
 
 function parseAmazonHtml(htmlContent) {
-  // Log the first 500 characters of the HTML for debugging
+  // Log the first 500 characters of the HTML for debugging -> REMOVER
   console.log('\n[DEBUG] HTML snippet before parsing (first 500 chars):');
   console.log(htmlContent.substring(0, 500));
 

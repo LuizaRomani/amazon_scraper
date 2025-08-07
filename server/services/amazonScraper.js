@@ -12,17 +12,6 @@ const AMAZON_HEADERS = {
   'priority': 'u=0, i',
   'referer': 'https://www.amazon.com.br/',
   'rtt': '50',
-  'sec-ch-device-memory': '8',
-  'sec-ch-dpr': '1',
-  'sec-ch-ua': '"Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"',
-  'sec-ch-ua-mobile': '?0',
-  'sec-ch-ua-platform': '"Windows"',
-  'sec-ch-ua-platform-version': '"15.0.0"',
-  'sec-ch-viewport-width': '1400',
-  'sec-fetch-dest': 'document',
-  'sec-fetch-mode': 'navigate',
-  'sec-fetch-site': 'same-origin',
-  'sec-fetch-user': '?1',
   'upgrade-insecure-requests': '1',
   'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
   'viewport-width': '1400'
@@ -41,6 +30,7 @@ function buildAmazonSearchUrl(keyword) {
  * @param {string} url - The URL to fetch
  * @returns {Promise<string>} - The HTML content
  */
+
 async function fetchWithAxios(url) {
   console.log(`[AXIOS] Attempting to fetch with axios...`);
   const response = await axios.get(url, { 
@@ -61,6 +51,7 @@ async function fetchWithAxios(url) {
  * @param {string} url - The URL to fetch
  * @returns {Promise<string>} - The HTML content
  */
+
 async function fetchWithPuppeteer(url) {
   console.log(`[PUPPETEER] Attempting to fetch with puppeteer...`);
   
@@ -84,11 +75,8 @@ async function fetchWithPuppeteer(url) {
     
     const page = await browser.newPage();
     
-    // Set user agent and viewport
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36');
     await page.setViewport({ width: 1400, height: 800 });
-    
-    // Set extra headers
     await page.setExtraHTTPHeaders({
       'accept-language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
       'referer': 'https://www.amazon.com.br/'
@@ -97,7 +85,7 @@ async function fetchWithPuppeteer(url) {
     console.log(`[PUPPETEER] Navigating to: ${url}`);
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
     
-    // Wait a bit for dynamic content to load
+    // Wait for dynamic content to load
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     const html = await page.content();
@@ -120,16 +108,15 @@ async function fetchWithPuppeteer(url) {
  * @param {string} url - The URL to fetch
  * @returns {Promise<string>} - The HTML content
  */
+
 async function fetchHtmlWithFallback(url) {
   try {
-    // Try axios first
     return await fetchWithAxios(url);
   } catch (axiosError) {
     console.log(`[FALLBACK] Axios failed: ${axiosError.message}`);
     console.log(`[FALLBACK] Trying puppeteer as fallback...`);
     
     try {
-      // Try puppeteer as fallback
       return await fetchWithPuppeteer(url);
     } catch (puppeteerError) {
       console.error(`[FALLBACK] Both methods failed:`);

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const amazonScraper = require('../services/amazonScraper');
 
-// GET /api/scrape?keyword=yourKeyword
 router.get('/scrape', async (req, res) => {
   const { keyword } = req.query;
   
