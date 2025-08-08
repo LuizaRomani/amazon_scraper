@@ -1,7 +1,8 @@
 {
-  "name": "web",
+  "name": "amazon-scraper-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Frontend for Amazon Product Scraper - HTML, CSS, Vanilla JavaScript with Vite",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,5 +11,8 @@
   },
   "devDependencies": {
     "vite": "^7.1.0"
-  }
+  },
+  "keywords": ["amazon", "scraper", "frontend", "vite", "vanilla-js"],
+  "author": "",
+  "license": "MIT"
 }

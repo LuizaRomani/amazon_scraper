@@ -3,7 +3,6 @@
 A robust Amazon product scraper API built with Bun, Express, and JSDOM. Features fallback mechanisms using Puppeteer when axios requests are blocked.
 
 
-
 ## 📁 Project Structure
 
 ```
